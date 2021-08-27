@@ -1,106 +1,74 @@
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.jsp.*;
+import cnt.Security.*;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+
+import java.lang.StringBuffer;
+import java.sql;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.ResultSet;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+public class SQLTest extends HttpJspBase {
+	public static void sqlTest1 (Connection conn, HttpServletRequest request) {
+		ResultSet rs = null;
+		Statement stmt = null;
 
-/**
- * Servlet implementation class StartServlet.
- * 
- */
-public class StartServlet extends HttpServlet {
+		String userInput = request.getParameter('user');
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+		String query = "SELECT * " +
+        	"FROM TABLE " +
+        	"WHERE 1=1 ";
+	
+		if (!userInput.equals("")){
+			query+=(" AND ID=" + userInput + " ");
+		}
+	
+	 	try {
+			conn = DriverManager.getConnection("http://sql", "userName", "password");
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+		} catch (SQLException sqlExcept) {
+			sqlExcept.printStackTrace();
+		}
+	}
 
-    protected void processRequest(HttpServletRequest request) throws ServletException, IOException {
-        
-        String user = request.getParameter("user");
+	public static void sqlTest2 (Connection con, HttpServletRequest request) {
+		ResultSet rs = null;
+		Statement stmt = null;
 
-        Connection conn = null;
-        String url = "jdbc:mysql://127.0.0.1:3306/";
-        String dbName = "sql_inject";
-        String driver = "com.mysql.jdbc.Driver";
-        String userName = "root";
-        String password = "root";
-    
-        try {
-            Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection(url + dbName, userName, password);
+		String userInput = request.getParameter('user');
 
-            Statement st = conn.createStatement();
-            String query = "SELECT * FROM  User where userid='" + user + "'";
-            ResultSet res = st.executeQuery(query);
+		StringBuffer strBuf = new StringBuffer("SELECT * FROM foo WHERE 1=1"); 
+		strBuf.append("&variable=" + userInput); 
 
-            conn.close();
+		String query=strBuf.toString(); 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+		try {
+			conn = DriverManager.getConnection("http://sql", "userName", "password");
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+		} catch (SQLException sqlExcept) {
+			sqlExcept.printStackTrace();
+		}
+	}
 
-     protected void processRequest_2(HttpServletRequest request) throws ServletException, IOException {
-        
-        String id = request.getParameter("id");
+	public static void sqlTest2 (String userId, String password, Connection con) {
+		String query = "SELECT * FROM users WHERE userid ='"+ userid + "'" + " AND password='" + 
+						password + "'";
 
-        Connection conn = null;
-        String url = "jdbc:mysql://127.0.0.1:3306/";
-        String dbName = "sql_inject";
-        String driver = "com.mysql.jdbc.Driver";
-        String userName = "root";
-        String password = "root";
-    
-        try {
-            Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection(url + dbName, userName, password);
-
-            Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM TABLE WHERE 1=1 ";
-            if (!id.equals("")) {
-                query += (" AND ID="+ id +" ");
-            }
-            ResultSet rs = stmt.executeQuery(query);
-
-            conn.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected void processRequest_3 (HttpServletRequest request) throws ServletException, IOException {
-        
-        String input = request.getParameter("input");
-
-        StringBuffer strBuf = new StringBuffer("SELECT * FROM foo WHERE 1=1");
-        strBuf.append ("&variable=" + input); 
-        String query = strBuf.toString(); 
-
-        Connection conn = null;
-        String url = "jdbc:mysql://127.0.0.1:3306/";
-        String dbName = "sql_inject";
-        String driver = "com.mysql.jdbc.Driver";
-        String userName = "root";
-        String password = "root";
-    
-        try {
-            Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection(url + dbName, userName, password);
-
-            Statement st = conn.createStatement();
-            ResultSet res = st.executeQuery(query);
-
-            conn.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+		} catch (SQLException sqlExcept) {
+			sqlExcept.printStackTrace();
+		}
+	}
 }
