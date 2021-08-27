@@ -1,5 +1,6 @@
 String username = request.getParameter("username");
 String password = request.getParameter("password");
+boolean loggedIn = false;
 
 String sql = "select * from users where (username ='" + username +"' and password ='" + password + "')";
 
