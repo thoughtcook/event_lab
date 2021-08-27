@@ -1,5 +1,5 @@
-#from django.http import HttpResponse
-from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect, reverse
+from sqlite3 import *
+from django.http import HttpResponse
 
 def authenticate(request):
     email = request.POST['email']
