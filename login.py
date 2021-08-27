@@ -1,3 +1,4 @@
+import os
 from sqlite3 import *
 from django.http import HttpResponse
 
