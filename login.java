@@ -32,7 +32,7 @@ public class SQLTest extends HttpJspBase {
 		}
 	
 	 	try {
-			conn = DriverManager.getConnection("http://sql", "userName", "password");
+			conn = DriverManager.getConnection("http://sql", "userName", "passPhrase");
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 		} catch (SQLException sqlExcept) {
@@ -52,7 +52,7 @@ public class SQLTest extends HttpJspBase {
 		String query=strBuf.toString(); 
 
 		try {
-			conn = DriverManager.getConnection("http://sql", "userName", "password");
+			conn = DriverManager.getConnection("http://sql", "userName", "passPhrase");
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 		} catch (SQLException sqlExcept) {
@@ -60,9 +60,9 @@ public class SQLTest extends HttpJspBase {
 		}
 	}
 
-	public static void sqlTest2 (String userId, String password, Connection con) {
-		String query = "SELECT * FROM users WHERE userid ='"+ userid + "'" + " AND password='" + 
-						password + "'";
+	public static void sqlTest2 (String userId, String passPhrase, Connection con) {
+		String query = "SELECT * FROM users WHERE userid ='"+ userid + "'" + " AND passPhrase='" + 
+						passPhrase + "'";
 
 		try {
 			Statement stmt = connection.createStatement();
