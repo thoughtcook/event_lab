@@ -16,59 +16,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
-public class SQLTest extends HttpJspBase {
-	public static void sqlTest1 (Connection conn, HttpServletRequest request, String userId, String passPhrase) {
-		ResultSet rs = null;
-		Statement stmt = null;
+String email = request.getParameter("email");
+String password = request.getParameter("password");
 
-		String userInput = request.getParameter('user');
+String sql = "select * from users where (email ='" + email +"' and password ='" + password + "')";
 
-		String query = "SELECT * " +
-        	"FROM TABLE " +
-        	"WHERE 1=1 ";
-	
-		if (!userInput.equals("")){
-			query+=(" AND ID=" + userInput + " ");
-		}
-	
-	 	try {
-			conn = DriverManager.getConnection("http://sql", userId, passPhrase);
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(query);
-		} catch (SQLException sqlExcept) {
-			sqlExcept.printStackTrace();
-		}
-	}
+Connection connection = pool.getConnection();
+Statement statement = connection.createStatement();
+ResultSet result = statement.executeQuery(sql);
 
-	public static void sqlTest2 (Connection con, HttpServletRequest request, String userId, String passPhrase) {
-		ResultSet rs = null;
-		Statement stmt = null;
-
-		String userInput = request.getParameter('user');
-
-		StringBuffer strBuf = new StringBuffer("SELECT * FROM foo WHERE 1=1"); 
-		strBuf.append("&variable=" + userInput); 
-
-		String query=strBuf.toString(); 
-
-		try {
-			conn = DriverManager.getConnection("http://sql", userId, passPhrase);
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(query);
-		} catch (SQLException sqlExcept) {
-			sqlExcept.printStackTrace();
-		}
-	}
-
-	public static void sqlTest2 (String userId, String passPhrase, Connection con) {
-		String query = "SELECT * FROM users WHERE userid ='"+ userid + "'" + " AND password ='" + 
-						passPhrase + "'";
-
-		try {
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-		} catch (SQLException sqlExcept) {
-			sqlExcept.printStackTrace();
-		}
-	}
+if (result.next()) {
+    loggedIn = true;
+    // Successfully logged in and redirect to user profile page
+} else {
+    // Auth failure - Redirect to Login Page
 }
