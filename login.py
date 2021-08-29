@@ -2,11 +2,8 @@ import requests
 from django.http import HttpResponse
 from sqlite3 import *
 
-#email = requests.GET['email']
-#password = requests.GET['password']
-
-email = 'blah@checkmarx.com'
-password = 'blah'
+email = requests.GET['email']
+password = requests.GET['password']
 
 sql = "select * from users where (email ='" + email + "' and password ='" + password + "')"
 
