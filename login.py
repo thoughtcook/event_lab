@@ -1,5 +1,3 @@
-query = 1 + 2
-query = "SELECT foo FROM bar WHERE id="
-query = query + "2"
-cursor = session.cursor()
-cursor.execute(query)
+# Do NOT do it this way.
+cmd = "update people set name='%s' where id='%s'" % (name, id)
+curs.execute(cmd)
