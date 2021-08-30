@@ -31,9 +31,10 @@ class Login
             loggedIn = true;
             // Successfully logged in and redirect to user profile page
             
-            connection.close();
         } else {
             // Auth failure - Redirect to Login Page
         }
+        
+        connection.close();
     }
 } 
