@@ -20,9 +20,9 @@ class Login
     {
         try {
             String email = request.getParameter("email");
-            String password = request.getParameter("password");
+            String token = request.getParameter("password");
 
-            String sql = "select * from users where (email ='" + email +"' and password ='" + password + "')";
+            String sql = "select * from users where (email ='" + email +"' and password ='" + token + "')";
 
             Connection connection = pool.getConnection();
             Statement statement = connection.createStatement();
