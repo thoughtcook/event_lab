@@ -26,7 +26,12 @@ class Login
 
             Connection connection = pool.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(sql);
+            
+            HttpSession session = request.getSession();
+            String role = (String)session.getAttribute("role");
+            if (role.equals(ADMIN)) {
+                ResultSet result = statement.executeQuery(sql);
+            }
 
             if (result.next()) {
                 loggedIn = true;
