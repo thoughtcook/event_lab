@@ -40,11 +40,13 @@ class Login
             } else {
              // Auth failure - Redirect to Login Page
             }
-            
-            connection.close();
         }
-        catch (e) {
-            connection.close();
-        }
+    } catch (SQLException ex) {
+        handleExceptions(ex);
+    }
+    finally {
+        closeQuietly(statement);
+        closeQuietly(connection);
+    }
     }
 } 
