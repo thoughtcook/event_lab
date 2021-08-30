@@ -3,11 +3,6 @@ import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import cnt.Security.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import java.lang.StringBuffer;
 import java.sql;
 import java.sql.Connection;
@@ -15,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+
+import javax.servlet.http.HttpServletRequest;
 
 String email = request.getParameter("email");
 String password = request.getParameter("password");
