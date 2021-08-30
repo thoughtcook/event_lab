@@ -18,23 +18,29 @@ class Login
 {
     public static void main(String[] args)   
     {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        try {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
 
-        String sql = "select * from users where (email ='" + email +"' and password ='" + password + "')";
+            String sql = "select * from users where (email ='" + email +"' and password ='" + password + "')";
 
-        Connection connection = pool.getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery(sql);
+            Connection connection = pool.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql);
 
-        if (result.next()) {
-            loggedIn = true;
-            // Successfully logged in and redirect to user profile page
+            if (result.next()) {
+                loggedIn = true;
+                // Successfully logged in and redirect to user profile page
             
-        } else {
-            // Auth failure - Redirect to Login Page
+            } else {
+             // Auth failure - Redirect to Login Page
+            }
+            
+            connection.close();
         }
-        
-        connection.close();
+        catch (e) {
+            System.out.println(e);
+            connection.close();
+        }
     }
 } 
