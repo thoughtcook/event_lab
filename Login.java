@@ -45,8 +45,8 @@ class Login
             handleExceptions(ex);
         }
         finally {
-            closeQuietly(statement);
-            closeQuietly(connection);
+            statement.close();
+            connection.close();
         }
     }
 } 
