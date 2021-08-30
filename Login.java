@@ -31,6 +31,8 @@ class Login
             String role = (String)session.getAttribute("role");
             if (role.equals(ADMIN)) {
                 ResultSet result = statement.executeQuery(sql);
+                statement.close();
+                connection.close();
             }
 
             if (result.next()) {
