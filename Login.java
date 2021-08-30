@@ -41,12 +41,12 @@ class Login
              // Auth failure - Redirect to Login Page
             }
         }
-    } catch (SQLException ex) {
-        handleExceptions(ex);
-    }
-    finally {
-        closeQuietly(statement);
-        closeQuietly(connection);
-    }
+        catch (SQLException ex) {
+            handleExceptions(ex);
+        }
+        finally {
+            closeQuietly(statement);
+            closeQuietly(connection);
+        }
     }
 } 
