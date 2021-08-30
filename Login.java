@@ -39,7 +39,6 @@ class Login
             connection.close();
         }
         catch (e) {
-            System.out.println(e);
             connection.close();
         }
     }
